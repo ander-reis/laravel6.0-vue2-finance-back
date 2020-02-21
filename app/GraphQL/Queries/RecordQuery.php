@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Account;
+use App\Record;
 use Closure;
 use GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -12,16 +12,16 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class AccountQuery extends Query
+class RecordQuery extends Query
 {
     protected $attributes = [
-        'name' => 'account',
+        'name' => 'record',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('accounts'));
+        return Type::listOf(GraphQL::type('records'));
     }
 
     public function args(): array
@@ -42,10 +42,9 @@ class AccountQuery extends Query
         $with = $fields->getRelations();
 
         if (isset($args['id'])) {
-            return Account::where('id', $args['id'])->get();
+            return Record::where('id', $args['id'])->get();
         }
 
-        $accounts = Account::select($select)->with($with);
-        return $accounts->get();
+        return Record::all();
     }
 }

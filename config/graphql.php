@@ -2,10 +2,17 @@
 
 declare(strict_types=1);
 
+use App\GraphQL\Mutations\LoginMutation;
+use App\GraphQL\Queries\LoginQuery;
 use App\GraphQL\Queries\UserQuery;
+use App\GraphQL\Types\LoginType;
 use App\GraphQL\Types\UserType;
 use App\GraphQL\Queries\AccountQuery;
 use App\GraphQL\Types\AccountType;
+use App\GraphQL\Queries\CategoryQuery;
+use App\GraphQL\Types\CategoryType;
+use App\GraphQL\Queries\RecordQuery;
+use App\GraphQL\Types\RecordType;
 
 return [
 
@@ -101,12 +108,15 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'user' => UserQuery::class,
-                'accounts' => AccountQuery::class,
+                'user'          => UserQuery::class,
+                'accounts'      => AccountQuery::class,
+                'categories'    => CategoryQuery::class,
+                'records'       => RecordQuery::class,
             ],
             'mutation' => [
-                // 'example_mutation'  => ExampleMutation::class,
+                'login'  => LoginMutation::class,
             ],
+//            'middleware' => ['auth.jwt'],
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
@@ -122,8 +132,12 @@ return [
     // ]
     //
     'types' => [
-        'user'           => UserType::class,
-        'accounts'           => AccountType::class,
+        'user'          => UserType::class,
+        'accounts'      => AccountType::class,
+        'categories'    => CategoryType::class,
+        'records'       => RecordType::class,
+        'login'         => LoginType::class,
+
         // 'relation_example'  => ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
     ],

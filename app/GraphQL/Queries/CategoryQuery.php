@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
+use App\Category;
 use Closure;
+use GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class CotegoryQuery extends Query
+class CategoryQuery extends Query
 {
     protected $attributes = [
         'name' => 'cotegory',
@@ -19,13 +21,16 @@ class CotegoryQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(Type::string());
+        return Type::listOf(GraphQL::type('categories'));
     }
 
     public function args(): array
     {
         return [
-
+            'id' => [
+                'type' => Type::int(),
+                'description' => 'id category'
+            ]
         ];
     }
 
@@ -36,8 +41,10 @@ class CotegoryQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        return [
-            'The cotegory works',
-        ];
+        if (isset($args['id'])) {
+            return Category::where('id', $args['id'])->get();
+        }
+
+        return Category::all();
     }
 }
