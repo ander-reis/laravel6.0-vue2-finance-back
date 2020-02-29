@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\User;
+use Auth;
 use Closure;
 use GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use http\Env\Response;
 use Rebing\GraphQL\Support\Mutation;
-use Rebing\GraphQL\Support\SelectFields;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginMutation extends Mutation
@@ -21,18 +20,6 @@ class LoginMutation extends Mutation
         'name' => 'login',
         'description' => 'A mutation'
     ];
-
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        $input = ['email' => $args['email'], 'password' => $args['password']];
-
-        $token = null;
-
-        if (!$token = JWTAuth::attempt($input)) {
-            return false;
-        }
-        return (boolean) $token;
-    }
 
     public function type(): Type
     {
@@ -64,13 +51,11 @@ class LoginMutation extends Mutation
 //            ->select($fields->getSelect())->first();
 
         $input = ['email' => $args['email'], 'password' => $args['password']];
-
         $token = null;
-
-        if (!$token = JWTAuth::attempt($input)) {
+        $token = JWTAuth::attempt($input);
+        if (!$token) {
             return false;
         }
-//        dd($token);
-        return $token;
+        return ['token' => $token];
     }
 }

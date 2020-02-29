@@ -18,6 +18,7 @@ return [
 
     // The prefix for routes
     'prefix' => 'graphql',
+//    'prefix' => '/api',
 
     // The routes to make GraphQL request. Either a string that will apply
     // to both query and mutation or an array containing the key 'query' and/or
@@ -52,6 +53,7 @@ return [
     'controllers' => \Rebing\GraphQL\GraphQLController::class.'@query',
 
     // Any middleware for the graphql route group
+//    'middleware' => ['auth.jwt'],
     'middleware' => [],
 
     // Additional route group attributes
@@ -120,6 +122,14 @@ return [
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
+//        'login' => [
+//            'query' => [],
+//            'mutation' => [
+//                'login'  => LoginMutation::class,
+//            ],
+//            'middleware' => [],
+//            'method' => ['get', 'post'],
+//        ]
     ],
 
     // The types available in the application. You can then access it from the

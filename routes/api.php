@@ -18,4 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', 'ApiController@login');
+Route::get('teste', 'TesteController@teste')->middleware('auth.jwt');
+
+//Route::domain('http://localhost:8000/graphql')->group(function () {
+//    Route::post(
+//        'graphql',
+//        [\Rebing\GraphQL\GraphQLController::class, 'mutation']
+//    )->middleware();
+//});
+
+
 //Route::post('graphql/login', 'AuthenticateController@authenticate');

@@ -11,6 +11,8 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
+use JWTAuth;
+use Auth;
 
 class UserQuery extends Query
 {
@@ -18,6 +20,18 @@ class UserQuery extends Query
         'name' => 'UserQuery',
         'description' => 'User'
     ];
+
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
+    {
+
+        //        $user = JWTAuth::parseToken()->toUser();
+        $user = JWTAuth::parseToken()->authenticate();
+//        dd($user);
+        if(!$user){
+            return false;
+        }
+        return true;
+    }
 
     public function type(): Type
     {
