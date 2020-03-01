@@ -24,9 +24,9 @@ class UserQuery extends Query
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
 
-        //        $user = JWTAuth::parseToken()->toUser();
+//        $user = JWTAuth::parseToken()->toUser();
         $user = JWTAuth::parseToken()->authenticate();
-//        dd($user);
+//        dd($user->name);
         if(!$user){
             return false;
         }
@@ -35,7 +35,7 @@ class UserQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('user'));
+        return GraphQL::type('user');
     }
 
     public function args(): array
@@ -75,7 +75,7 @@ class UserQuery extends Query
             return User::where('email', $args['email'])->get();
         }
 
-        $users = User::select($select)->with($with);
-        return $users->get();
+        $user = JWTAuth::parseToken()->toUser();
+        return $user;
     }
 }

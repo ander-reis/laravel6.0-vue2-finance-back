@@ -1,3 +1,5 @@
 https://github.com/rebing/graphql-laravel
 
 https://medium.com/skyshidigital/easy-build-api-using-laravel-and-graphql-jwt-authentication-part-3-ea15c2421408
+
+https://github.com/mll-lab/laravel-graphql-playground
