@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\GraphQL\Queries;
+namespace App\GraphQL\Mutations;
 
-use App\Account;
 use Closure;
 use GraphQL;
 use JWTAuth;
+use App\Account;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use Rebing\GraphQL\Support\Query;
+use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
 
-class AccountQuery extends Query
+
+class CreateAccountMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'account',
-        'description' => 'A query'
+        'name' => 'createAccount',
+        'description' => 'A mutation'
     ];
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
@@ -34,26 +35,26 @@ class AccountQuery extends Query
     public function args(): array
     {
         return [
-            'id' => [
-                'type' => Type::int(),
-                'description' => 'id account'
-            ]
+            'description' => [
+                'type' => Type::nonNull(Type::string()),
+                'description' => 'description'
+            ],
         ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var SelectFields $fields */
         $fields = $getSelectFields();
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        if (isset($args['id'])) {
-            return Account::where('id', $args['id'])->get();
-        }
+        $user= auth()->user();
 
-        $user = JWTAuth::parseToken()->toUser();
-        $accounts = Account::where('user_id', $user->id)->get();
-        return $accounts;
+        $account =  Account::create([
+            'description' => $args['description'],
+            'user_id' => $user->id
+        ]);
+        //dd($account);
+        return ['account' => $account];
     }
 }

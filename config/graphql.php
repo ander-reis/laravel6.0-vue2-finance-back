@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
+use App\GraphQL\Mutations\CreateAccountMutation;
 use App\GraphQL\Mutations\LoginMutation;
 use App\GraphQL\Mutations\SignupMutation;
-use App\GraphQL\Queries\LoginQuery;
+use App\GraphQL\Queries\AccountQuery;
+use App\GraphQL\Queries\RecordQuery;
+use App\GraphQL\Queries\CategoryQuery;
 use App\GraphQL\Queries\UserQuery;
+use App\GraphQL\Types\CreateAccountType;
 use App\GraphQL\Types\LoginType;
 use App\GraphQL\Types\SignupType;
 use App\GraphQL\Types\UserType;
-use App\GraphQL\Queries\AccountQuery;
 use App\GraphQL\Types\AccountType;
-use App\GraphQL\Queries\CategoryQuery;
 use App\GraphQL\Types\CategoryType;
-use App\GraphQL\Queries\RecordQuery;
 use App\GraphQL\Types\RecordType;
 
 return [
@@ -119,6 +120,7 @@ return [
             'mutation' => [
                 'login'  => LoginMutation::class,
                 'signup' => SignupMutation::class,
+                'createAccount' => CreateAccountMutation::class,
             ],
 //            'middleware' => ['auth.jwt'],
             'middleware' => [],
@@ -150,6 +152,7 @@ return [
         'records'       => RecordType::class,
         'login'         => LoginType::class,
         'signup'        => SignupType::class,
+        'createAccount' => CreateAccountType::class,
 
         // 'relation_example'  => ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,

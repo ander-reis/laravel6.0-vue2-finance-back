@@ -26,7 +26,6 @@ class UserQuery extends Query
 
 //        $user = JWTAuth::parseToken()->toUser();
         $user = JWTAuth::parseToken()->authenticate();
-//        dd($user->name);
         if(!$user){
             return false;
         }
