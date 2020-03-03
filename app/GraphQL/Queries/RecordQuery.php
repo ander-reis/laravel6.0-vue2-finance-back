@@ -7,6 +7,7 @@ namespace App\GraphQL\Queries;
 use App\Record;
 use Closure;
 use GraphQL;
+use JWTAuth;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
@@ -19,6 +20,12 @@ class RecordQuery extends Query
         'description' => 'A query'
     ];
 
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        return $user ? true : false;
+    }
+
     public function type(): Type
     {
         return Type::listOf(GraphQL::type('records'));
@@ -26,12 +33,7 @@ class RecordQuery extends Query
 
     public function args(): array
     {
-        return [
-            'id' => [
-                'type' => Type::int(),
-                'description' => 'id account'
-            ]
-        ];
+        return [];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
@@ -41,10 +43,8 @@ class RecordQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        if (isset($args['id'])) {
-            return Record::where('id', $args['id'])->get();
-        }
-
-        return Record::all();
+        $userId = auth()->user()->id;
+        $record = Record::where('user_id', $userId)->get();
+        return $record;
     }
 }

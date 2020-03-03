@@ -32,10 +32,6 @@ class AccountType extends GraphQLType
             'user' => [
                 'type' => GraphQL::type('user'),
                 'description' => 'user account',
-                'always' => ['id', 'name'],
-//                'query' => function(array $args, $query){
-//                    return $query->where('id', '=', $args['id']);
-//                }
             ]
         ];
     }

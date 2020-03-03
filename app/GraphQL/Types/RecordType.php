@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Types;
 
+use Carbon\Carbon;
 use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
@@ -27,12 +28,15 @@ class RecordType extends GraphQLType
                 'description' => 'Amount record'
             ],
             'type' => [
-                'type' => Type::string(),
+                'type' => GraphQL::type('operation'),
                 'description' => 'Type record'
             ],
             'date' => [
                 'type' => Type::string(),
-                'description' => 'Date record'
+                'description' => 'Date record',
+                'resolve' => function($model) {
+                    return (string) Carbon::parse($model->date)->format('Y-m-d');
+                }
             ],
             'description' => [
                 'type' => Type::string(),

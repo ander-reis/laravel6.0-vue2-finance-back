@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\User;
+use App\Category;
+use App\GraphQL\Enums\Operation;
 use Closure;
 use GraphQL;
 use JWTAuth;
-use App\Account;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
 
-
-class CreateAccountMutation extends Mutation
+class CreateCategoryMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'createAccount',
+        'name' => 'createCategory',
         'description' => 'A mutation'
     ];
 
@@ -30,8 +29,7 @@ class CreateAccountMutation extends Mutation
 
     public function type(): Type
     {
-//        return Type::listOf(GraphQL::type('accounts'));
-        return GraphQL::type('createAccount');
+        return Type::listOf(GraphQL::type('categories'));
     }
 
     public function args(): array
@@ -40,6 +38,10 @@ class CreateAccountMutation extends Mutation
             'description' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'description'
+            ],
+            'operation' => [
+                'type' => Type::nonNull(GraphQL::type('operation')),
+                'description' => 'operation'
             ],
         ];
     }
@@ -52,15 +54,12 @@ class CreateAccountMutation extends Mutation
 
         $userId = auth()->user()->id;
 
-        $account =  Account::create([
+        $operation =  Category::create([
             'description' => $args['description'],
+            'operation' => strtoupper($args['operation']),
             'user_id' => $userId
         ]);
 
-        return [
-            'id' => $account->id,
-            'description' => $account->description,
-            'user' => [$account->user]
-        ];
+        return ['operation' => $operation];
     }
 }

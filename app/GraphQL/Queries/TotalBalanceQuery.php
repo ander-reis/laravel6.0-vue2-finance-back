@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Queries;
 
+use App\Record;
 use App\User;
 use Closure;
-use GraphQL;
 use JWTAuth;
-use App\Account;
+use Auth;
+use GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use Rebing\GraphQL\Support\Mutation;
+use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-
-class CreateAccountMutation extends Mutation
+class TotalBalanceQuery extends Query
 {
     protected $attributes = [
-        'name' => 'createAccount',
-        'description' => 'A mutation'
+        'name' => 'totalBalance',
+        'description' => 'A query'
     ];
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
@@ -30,37 +30,28 @@ class CreateAccountMutation extends Mutation
 
     public function type(): Type
     {
-//        return Type::listOf(GraphQL::type('accounts'));
-        return GraphQL::type('createAccount');
+        return GraphQL::type('records');
     }
 
     public function args(): array
     {
         return [
-            'description' => [
-                'type' => Type::nonNull(Type::string()),
-                'description' => 'description'
-            ],
+            'date' => [
+                'type' => Type::string(),
+                'description' => 'date amount record'
+            ]
         ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
+        /** @var SelectFields $fields */
         $fields = $getSelectFields();
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $userId = auth()->user()->id;
+        $amount = JWTAuth::user()->records->where('date', '<=', $args['date'])->sum('amount');
 
-        $account =  Account::create([
-            'description' => $args['description'],
-            'user_id' => $userId
-        ]);
-
-        return [
-            'id' => $account->id,
-            'description' => $account->description,
-            'user' => [$account->user]
-        ];
+        return ['amount' => $amount];
     }
 }

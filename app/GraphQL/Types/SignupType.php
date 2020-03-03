@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Types;
 
+use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
@@ -21,6 +22,14 @@ class SignupType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'token'
             ],
+            'user' => [
+                'type' => GraphQL::type('user'),
+                'description' => 'user',
+                'always' => ['id', 'name', 'email'],
+                'query' => function(array $args, $query){
+                    return $query->where('email', '=', $args['email'])->first();
+                }
+            ]
         ];
     }
 }

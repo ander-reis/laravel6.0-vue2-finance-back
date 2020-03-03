@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use Auth;
 use Closure;
 use GraphQL;
+use JWTAuth;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginMutation extends Mutation
 {
@@ -23,6 +22,7 @@ class LoginMutation extends Mutation
     public function type(): Type
     {
         return GraphQL::type('login');
+//        return Type::listOf(GraphQL::type('login'));
     }
 
     public function args(): array
@@ -49,11 +49,13 @@ class LoginMutation extends Mutation
         $token = null;
         $token = JWTAuth::attempt($credentials);
 
-//        if (!$token) {
-//            return false;
-//        }
-//        return ['token' => $token];
+        $user = auth()->user();
 
-        return ['token' => $token] ?? null;
+        return ['token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email
+                ]] ?? null;
     }
 }

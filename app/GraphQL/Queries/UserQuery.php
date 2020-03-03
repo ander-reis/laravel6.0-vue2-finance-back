@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\User;
 use Closure;
 use GraphQL;
+use JWTAuth;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
-use JWTAuth;
-use Auth;
 
 class UserQuery extends Query
 {
@@ -23,13 +21,9 @@ class UserQuery extends Query
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-
 //        $user = JWTAuth::parseToken()->toUser();
         $user = JWTAuth::parseToken()->authenticate();
-        if(!$user){
-            return false;
-        }
-        return true;
+        return $user ? true : false;
     }
 
     public function type(): Type
@@ -39,20 +33,7 @@ class UserQuery extends Query
 
     public function args(): array
     {
-        return [
-            'id' => [
-                'type' => Type::int(),
-                'description' => 'id user'
-            ],
-            'name' => [
-                'type' => Type::string(),
-                'description' => 'user name'
-            ],
-            'email' => [
-                'type' => Type::string(),
-                'description' => 'user email'
-            ],
-        ];
+        return [];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
@@ -62,19 +43,8 @@ class UserQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        if (isset($args['id'])) {
-            return User::where('id', $args['id'])->get();
-        }
-
-        if (isset($args['name'])) {
-            return User::where('name', $args['name'])->get();
-        }
-
-        if (isset($args['email'])) {
-            return User::where('email', $args['email'])->get();
-        }
-
-        $user = JWTAuth::parseToken()->toUser();
+//        $user = JWTAuth::parseToken()->toUser();
+        $user = auth()->user();
         return $user;
     }
 }

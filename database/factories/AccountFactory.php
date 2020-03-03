@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Account::class, function (Faker $faker) {
     return [
-        'description' => $faker->text(rand(10, 100))
+        'description' => $faker->text(20)
     ];
 });

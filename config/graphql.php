@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
+use App\GraphQL\Enums\Operation;
 use App\GraphQL\Mutations\CreateAccountMutation;
+use App\GraphQL\Mutations\CreateCategoryMutation;
+use App\GraphQL\Mutations\CreateRecordMutation;
 use App\GraphQL\Mutations\LoginMutation;
 use App\GraphQL\Mutations\SignupMutation;
 use App\GraphQL\Queries\AccountQuery;
 use App\GraphQL\Queries\RecordQuery;
 use App\GraphQL\Queries\CategoryQuery;
+use App\GraphQL\Queries\TotalBalanceQuery;
 use App\GraphQL\Queries\UserQuery;
 use App\GraphQL\Types\CreateAccountType;
 use App\GraphQL\Types\LoginType;
@@ -116,13 +120,15 @@ return [
                 'accounts'      => AccountQuery::class,
                 'categories'    => CategoryQuery::class,
                 'records'       => RecordQuery::class,
+                'totalBalance'  => TotalBalanceQuery::class,
             ],
             'mutation' => [
                 'login'  => LoginMutation::class,
                 'signup' => SignupMutation::class,
                 'createAccount' => CreateAccountMutation::class,
+                'createCategory' => CreateCategoryMutation::class,
+                'createRecord'  => CreateRecordMutation::class,
             ],
-//            'middleware' => ['auth.jwt'],
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
@@ -131,7 +137,7 @@ return [
 //            'mutation' => [
 //                'login'  => LoginMutation::class,
 //            ],
-//            'middleware' => [],
+//            'middleware' => ['auth.jwt'],
 //            'method' => ['get', 'post'],
 //        ]
     ],
@@ -153,6 +159,7 @@ return [
         'login'         => LoginType::class,
         'signup'        => SignupType::class,
         'createAccount' => CreateAccountType::class,
+        'operation' => Operation::class,
 
         // 'relation_example'  => ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,

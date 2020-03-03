@@ -27,7 +27,7 @@ class CreateAccountType extends GraphQLType
                 'description' => 'A descrição de account'
             ],
             'user' => [
-                'type' => GraphQL::type('user'),
+                'type' => Type::listOf(GraphQL::type('user')),
                 'description' => 'user account',
             ]
         ];

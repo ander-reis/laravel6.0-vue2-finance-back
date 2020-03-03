@@ -57,9 +57,18 @@ class SignupMutation extends Mutation
         ]);
 
         $credentials = ['email' => $args['email'], 'password' => $args['password']];
+
         $token = null;
+
         $token = JWTAuth::attempt($credentials);
 
-        return ['token' => $token] ?? null;
+        $user = auth()->user();
+
+        return ['token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email
+                ]] ?? null;
     }
 }

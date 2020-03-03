@@ -8,6 +8,7 @@ use App\Account;
 use Closure;
 use GraphQL;
 use JWTAuth;
+use Auth;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
@@ -52,8 +53,8 @@ class AccountQuery extends Query
             return Account::where('id', $args['id'])->get();
         }
 
-        $user = JWTAuth::parseToken()->toUser();
-        $accounts = Account::where('user_id', $user->id)->get();
+        $accounts = JWTAuth::user()->accounts;
+
         return $accounts;
     }
 }

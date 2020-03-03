@@ -7,6 +7,7 @@ namespace App\GraphQL\Queries;
 use App\Category;
 use Closure;
 use GraphQL;
+use JWTAuth;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
@@ -19,6 +20,12 @@ class CategoryQuery extends Query
         'description' => 'A query'
     ];
 
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        return $user ? true : false;
+    }
+
     public function type(): Type
     {
         return Type::listOf(GraphQL::type('categories'));
@@ -26,12 +33,7 @@ class CategoryQuery extends Query
 
     public function args(): array
     {
-        return [
-            'id' => [
-                'type' => Type::int(),
-                'description' => 'id category'
-            ]
-        ];
+        return [];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
@@ -41,10 +43,8 @@ class CategoryQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        if (isset($args['id'])) {
-            return Category::where('id', $args['id'])->get();
-        }
-
-        return Category::all();
+        $userId = auth()->user()->id;
+        $category = Category::where('user_id', $userId)->get();
+        return $category;
     }
 }

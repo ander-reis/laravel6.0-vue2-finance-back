@@ -27,7 +27,7 @@ class CategoryType extends GraphQLType
                 'description' => 'Descrição da categoria'
             ],
             'operation' => [
-                'type' => Type::string(),
+                'type' => GraphQL::type('operation'),
                 'description' => 'Operação da categoria'
             ],
             'user' => [
