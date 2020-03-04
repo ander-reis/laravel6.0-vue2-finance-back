@@ -29,7 +29,7 @@ class CreateCategoryMutation extends Mutation
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('categories'));
+        return GraphQL::type('categories');
     }
 
     public function args(): array
@@ -60,6 +60,11 @@ class CreateCategoryMutation extends Mutation
             'user_id' => $userId
         ]);
 
-        return ['operation' => $operation];
+        return [
+            'id' => $operation->id,
+            'description' => $operation->description,
+            'operation' => $operation->operation,
+            'user' => $operation->user
+        ];
     }
 }

@@ -28,7 +28,7 @@ class CreateRecordMutation extends Mutation
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('records'));
+        return GraphQL::type('records');
     }
 
     public function args(): array
@@ -89,6 +89,17 @@ class CreateRecordMutation extends Mutation
             'note' => $args['note']
         ]);
 
-        return ['record' => $record];
+        return [
+            'id' => $record->id,
+            'amount' => $record->amount,
+            'type' => $record->type,
+            'date' => $record->date,
+            'description' => $record->description,
+            'tags' => $record->tags,
+            'note' => $record->note,
+            'user' => $record->user,
+            'account' => $record->account,
+            'category' => $record->category
+        ];
     }
 }

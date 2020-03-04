@@ -12,7 +12,7 @@ class UserType extends GraphQLType
 {
     protected $attributes = [
         'name' => 'User',
-        'description' => 'user Type'
+        'description' => 'user Type nbsjkhsjghjdgsasj'
     ];
 
     public function fields(): array
@@ -28,7 +28,7 @@ class UserType extends GraphQLType
             ],
             'email' => [
                 'type' => Type::string(),
-                'description' => 'O email do usuário no banco'
+                'description' => 'O email do usuário no banco tamamnho 255'
             ],
             'accounts' => [
                 'type' => Type::listOf(GraphQL::type('accounts')),

@@ -42,12 +42,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function accounts()
     {
-        return $this->hasMany(Account::class);
+        return $this->hasMany(Account::class)->orderBy('description');
     }
 
     public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class)->orderBy('operation');
     }
 
     public function records()

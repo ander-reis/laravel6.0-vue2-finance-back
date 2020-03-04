@@ -30,8 +30,7 @@ class CreateAccountMutation extends Mutation
 
     public function type(): Type
     {
-//        return Type::listOf(GraphQL::type('accounts'));
-        return GraphQL::type('createAccount');
+        return GraphQL::type('accounts');
     }
 
     public function args(): array
@@ -60,7 +59,7 @@ class CreateAccountMutation extends Mutation
         return [
             'id' => $account->id,
             'description' => $account->description,
-            'user' => [$account->user]
+            'user' => $account->user
         ];
     }
 }

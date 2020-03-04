@@ -33,7 +33,12 @@ class CategoryQuery extends Query
 
     public function args(): array
     {
-        return [];
+        return [
+            'operation' => [
+                'type' => GraphQL::type('operation'),
+                'description' => 'Type operation'
+            ]
+        ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
@@ -43,8 +48,8 @@ class CategoryQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $userId = auth()->user()->id;
-        $category = Category::where('user_id', $userId)->get();
+        $category = JWTAuth::user()->categories;
+
         return $category;
     }
 }

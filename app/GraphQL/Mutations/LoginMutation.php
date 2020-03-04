@@ -19,6 +19,11 @@ class LoginMutation extends Mutation
         'description' => 'A mutation'
     ];
 
+    public function getAuthorizationMessage(): string
+    {
+        return 'You are not authorized to perform this action';
+    }
+
     public function type(): Type
     {
         return GraphQL::type('login');
@@ -53,9 +58,9 @@ class LoginMutation extends Mutation
 
         return ['token' => $token,
                 'user' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email
-                ]] ?? null;
+                    'id' => isset($user) ? $user->id : null,
+                    'name' => isset($user) ? $user->name : null,
+                    'email' => isset($user) ? $user->email : null
+                ]];
     }
 }

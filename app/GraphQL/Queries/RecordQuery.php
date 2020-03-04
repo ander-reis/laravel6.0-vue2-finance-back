@@ -33,7 +33,24 @@ class RecordQuery extends Query
 
     public function args(): array
     {
-        return [];
+        return [
+            'month' => [
+                'type' => Type::string(),
+                'description' => 'month record'
+            ],
+            'type' => [
+                'type' => GraphQL::type('operation'),
+                'description' => 'operation record'
+            ],
+            'accountsIds' => [
+                'type' => Type::int(),
+                'description' => 'account record id'
+            ],
+            'categoriesIds' => [
+                'type' => Type::int(),
+                'description' => 'categories record id'
+            ]
+        ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
@@ -43,8 +60,11 @@ class RecordQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $userId = auth()->user()->id;
-        $record = Record::where('user_id', $userId)->get();
+//        $userId = auth()->user()->id;
+//        $record = Record::where('user_id', $userId)->get();
+
+        $record = JWTAuth::user()->records;
+
         return $record;
     }
 }

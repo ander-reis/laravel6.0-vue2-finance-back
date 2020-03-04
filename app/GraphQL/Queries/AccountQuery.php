@@ -34,12 +34,7 @@ class AccountQuery extends Query
 
     public function args(): array
     {
-        return [
-            'id' => [
-                'type' => Type::int(),
-                'description' => 'id account'
-            ]
-        ];
+        return [];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
@@ -48,10 +43,6 @@ class AccountQuery extends Query
         $fields = $getSelectFields();
         $select = $fields->getSelect();
         $with = $fields->getRelations();
-
-        if (isset($args['id'])) {
-            return Account::where('id', $args['id'])->get();
-        }
 
         $accounts = JWTAuth::user()->accounts;
 

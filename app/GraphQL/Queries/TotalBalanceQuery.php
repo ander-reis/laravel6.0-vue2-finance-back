@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Record;
-use App\User;
 use Closure;
 use JWTAuth;
-use Auth;
 use GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -30,14 +28,15 @@ class TotalBalanceQuery extends Query
 
     public function type(): Type
     {
-        return GraphQL::type('records');
+        return GraphQL::type('totalBalance');
     }
 
     public function args(): array
     {
         return [
             'date' => [
-                'type' => Type::string(),
+//                'type' => Type::string(),
+                'type' => GraphQL::type('date'),
                 'description' => 'date amount record'
             ]
         ];
@@ -50,8 +49,16 @@ class TotalBalanceQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $amount = JWTAuth::user()->records->where('date', '<=', $args['date'])->sum('amount');
+//        dd($args['date']);
 
-        return ['amount' => $amount];
+        $totalBalance = JWTAuth::user()->records->where('date', '<=', $args['date'])->sum('amount');
+//        $totalBalance = Record::where('user_id' , 1)->where('date', '<=', $args['date'])->sum('amount');
+
+//        dd($totalBalance);
+
+//        return $amount ? ['amount' => $amount] : 0;
+//        return "0.00";
+
+        return ['totalBalance' => $totalBalance];
     }
 }

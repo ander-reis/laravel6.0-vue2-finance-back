@@ -34,8 +34,8 @@ class RecordType extends GraphQLType
             'date' => [
                 'type' => Type::string(),
                 'description' => 'Date record',
-                'resolve' => function($model) {
-                    return (string) Carbon::parse($model->date)->format('Y-m-d');
+                'resolve' => function() {
+                    return Carbon::parse($this->date)->format('Y-m-d');
                 }
             ],
             'description' => [
