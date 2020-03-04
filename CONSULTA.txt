@@ -1,0 +1,200 @@
+// records query
+{
+  records(
+    month: "02-2020",
+    type: CREDIT,
+    accountsIds: [],
+    categoriesIds: []
+  ){
+    id
+    date
+    description
+    amount
+    type
+    user{
+      id
+      name
+    }
+    category{
+      id
+      description
+    }
+    account{
+      id
+      description
+    }
+  }
+}
+
+// result
+{
+  "data": {
+    "records": [
+      {
+        "id": "ck6duyhm4000x07825bbieaa4",
+        "date": "2020-02-07T00:00:00.000Z",
+        "description": "Padaria",
+        "amount": 85,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck6duxko8000b0782684e4g8f",
+        "date": "2020-02-08T00:00:00.000Z",
+        "description": "Mercado",
+        "amount": -50,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck6nqpuqo001m0766m3nc8rs6",
+        "date": "2020-02-15T00:00:00.000Z",
+        "description": "Papelaria",
+        "amount": 85,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck77tebj0003a0766wl9e9obf",
+        "date": "2020-02-15T00:00:00.000Z",
+        "description": "Vendas",
+        "amount": -50,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck77tghq4003p0766gzwpbdyk",
+        "date": "2020-02-15T00:00:00.000Z",
+        "description": "Vendas",
+        "amount": -50,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck77tgp9z004007660cpoaznn",
+        "date": "2020-02-15T00:00:00.000Z",
+        "description": "Vendas",
+        "amount": -50,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck77tj884004d0766fz34uwcj",
+        "date": "2020-02-15T00:00:00.000Z",
+        "description": "Vendas",
+        "amount": -50,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      },
+      {
+        "id": "ck77tmisd004p0766oftw5muu",
+        "date": "2020-02-15T00:00:00.000Z",
+        "description": "Vendas",
+        "amount": 50,
+        "type": "CREDIT",
+        "user": {
+          "id": "ck3x5yqvt003s0770chpk1q9q",
+          "name": "admin"
+        },
+        "category": {
+          "id": "ck4ljugth00130782g7dbeb87",
+          "description": "Alimentação"
+        },
+        "account": {
+          "id": "ck4ljqas30031078226xy44zn",
+          "description": "Cartão de Crédito"
+        }
+      }
+    ]
+  }
+}
+
+
+// totalBalance query
+{
+  totalBalance(date: "2019-12-25")
+}
+
+// result
+{
+  "data": {
+    "totalBalance": -155
+  }
+}

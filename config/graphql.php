@@ -16,7 +16,6 @@ use App\GraphQL\Queries\UserQuery;
 use App\GraphQL\Scalars\Date;
 use App\GraphQL\Types\LoginType;
 use App\GraphQL\Types\SignupType;
-use App\GraphQL\Types\TotalBalanceType;
 use App\GraphQL\Types\UserType;
 use App\GraphQL\Types\AccountType;
 use App\GraphQL\Types\CategoryType;
@@ -160,7 +159,6 @@ return [
         'login'         => LoginType::class,
         'signup'        => SignupType::class,
         'operation'     => Operation::class,
-        'totalBalance'  => TotalBalanceType::class,
         'date'          => Date::class,
 
         // 'relation_example'  => ExampleRelationType::class,

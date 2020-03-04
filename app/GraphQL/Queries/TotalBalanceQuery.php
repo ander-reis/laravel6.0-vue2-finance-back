@@ -28,7 +28,7 @@ class TotalBalanceQuery extends Query
 
     public function type(): Type
     {
-        return GraphQL::type('totalBalance');
+        return Type::float();
     }
 
     public function args(): array
@@ -49,16 +49,8 @@ class TotalBalanceQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-//        dd($args['date']);
-
         $totalBalance = JWTAuth::user()->records->where('date', '<=', $args['date'])->sum('amount');
-//        $totalBalance = Record::where('user_id' , 1)->where('date', '<=', $args['date'])->sum('amount');
 
-//        dd($totalBalance);
-
-//        return $amount ? ['amount' => $amount] : 0;
-//        return "0.00";
-
-        return ['totalBalance' => $totalBalance];
+        return $totalBalance;
     }
 }
