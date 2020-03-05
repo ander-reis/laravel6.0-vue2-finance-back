@@ -52,7 +52,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function records()
     {
-        return $this->hasMany(Record::class);
+        return $this->hasMany(Record::class)->orderBy('date');
     }
 
     /**

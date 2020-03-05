@@ -68,7 +68,9 @@ class Date extends ScalarType implements TypeConvertible
      */
     public function parseLiteral($valueNode, ?array $variables = null)
     {
+//        dd(Carbon::createFromFormat('Y-m-d', $valueNode->value));
         return Carbon::parse($valueNode->value)->format('Y-m-d');
+//        return Carbon::createFromFormat('Y-m-d', $valueNode->value);
     }
 
     public function toType(): Type

@@ -20,26 +20,24 @@ class RecordType extends GraphQLType
     {
         return [
             'id' => [
-                'type' => Type::int(),
+                'type' => Type::nonNull(Type::id()),
                 'description' => 'Id record'
             ],
             'amount' => [
-                'type' => Type::float(),
+                'type' => Type::nonNull(Type::float()),
                 'description' => 'Amount record'
             ],
             'type' => [
-                'type' => GraphQL::type('operation'),
+                'type' => Type::nonNull(GraphQL::type('operation')),
                 'description' => 'Type record'
             ],
             'date' => [
-                'type' => Type::string(),
+                'type' => Type::nonNull(GraphQL::type('date')),
+//                'type' => Type::string(),
                 'description' => 'Date record',
-                'resolve' => function() {
-                    return Carbon::parse($this->date)->format('Y-m-d');
-                }
             ],
             'description' => [
-                'type' => Type::string(),
+                'type' => Type::nonNull(Type::string()),
                 'description' => 'Description record'
             ],
             'tags' => [
@@ -51,11 +49,11 @@ class RecordType extends GraphQLType
                 'description' => 'Note record'
             ],
             'user' => [
-                'type' => GraphQL::type('user'),
+                'type' => Type::nonNull(GraphQL::type('user')),
                 'description' => 'user',
             ],
             'account' => [
-                'type' => GraphQL::type('accounts'),
+                'type' => Type::nonNull(GraphQL::type('accounts')),
                 'description' => 'account',
             ],
             'category' => [

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Record;
+use Carbon\Carbon;
 use Closure;
 use GraphQL;
 use JWTAuth;
@@ -43,11 +44,11 @@ class RecordQuery extends Query
                 'description' => 'operation record'
             ],
             'accountsIds' => [
-                'type' => Type::int(),
+                'type' => Type::listOf(GraphQL::type('accounts')),
                 'description' => 'account record id'
             ],
             'categoriesIds' => [
-                'type' => Type::int(),
+                'type' => Type::listOf(GraphQL::type('categories')),
                 'description' => 'categories record id'
             ]
         ];
@@ -60,11 +61,24 @@ class RecordQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-//        $userId = auth()->user()->id;
+        $userId = auth()->user()->id;
 //        $record = Record::where('user_id', $userId)->get();
 
-        $record = JWTAuth::user()->records;
+        $date = Carbon::now();
+        $date_start = $date->parse('01-' . $args['month'])->format('Y-m-d');
+        $date_end = $date->format('Y-m-d');
 
+//        $record = Record::where('user_id', $userId)
+//            ->where('type', '=', $args['type'] ?? null)
+//            ->where('account_id', $args['accountsIds'] ?? null)
+//            ->whereBetween('date' , [$date_start, $date_end])
+//            ->orderBy('date')
+//            ->get();
+
+//        dd($record);
+
+
+        $record = JWTAuth::user()->records;
         return $record;
     }
 }

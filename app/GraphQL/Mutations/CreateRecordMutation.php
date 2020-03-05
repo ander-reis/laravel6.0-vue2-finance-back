@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\GraphQL\Scalars\Date;
 use App\Record;
 use Closure;
 use GraphQL;
@@ -51,7 +52,7 @@ class CreateRecordMutation extends Mutation
                 'description' => 'type'
             ],
             'date' => [
-                'type' => Type::nonNull(Type::string()),
+                'type' => Type::nonNull(GraphQL::type('date')),
                 'description' => 'date'
             ],
             'description' => [
@@ -77,12 +78,19 @@ class CreateRecordMutation extends Mutation
 
         $userId = auth()->user()->id;
 
+        $type = $args['type'];
+        $amount = $args['amount'];
+
+        if(($type === 'DEBIT' && $amount > 0) || ($type === 'CREDIT' && $amount < 0)) {
+            $amount = -$amount;
+        }
+
         $record = Record::create([
             'user_id' => $userId,
             'account_id' => $args['accountId'],
             'category_id' => $args['categoryId'],
-            'amount' => $args['amount'],
-            'type' => strtoupper($args['type']),
+            'amount' => $amount,
+            'type' => strtoupper($type),
             'date' => $args['date'],
             'description' => $args['description'],
             'tags' => $args['tags'],

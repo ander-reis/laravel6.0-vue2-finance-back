@@ -19,7 +19,7 @@ class CategoryType extends GraphQLType
     {
         return [
             'id' => [
-                'type' => Type::int(),
+                'type' => Type::id(),
                 'description' => 'Id da categoria'
             ],
             'description' => [

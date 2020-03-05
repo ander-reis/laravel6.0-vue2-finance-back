@@ -20,7 +20,7 @@ class CreateRecordsTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->float('amount', 10,2);
             $table->enum('type', ['CREDIT', 'DEBIT']);
-            $table->dateTime('date');
+            $table->date('date');
             $table->string('description', 255);
             $table->string('tags', 255)->nullable();
             $table->string('note', 255)->nullable();

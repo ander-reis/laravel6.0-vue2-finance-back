@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Record;
+use Carbon\Carbon;
 use Closure;
 use JWTAuth;
 use GraphQL;
@@ -49,7 +50,10 @@ class TotalBalanceQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $totalBalance = JWTAuth::user()->records->where('date', '<=', $args['date'])->sum('amount');
+
+        $date = Carbon::parse($args['date'])->format('Y-m-d');
+
+        $totalBalance = JWTAuth::user()->records->where('date', '<=', $date)->sum('amount');
 
         return $totalBalance;
     }
