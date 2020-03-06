@@ -198,3 +198,29 @@
     "totalBalance": -155
   }
 }
+
+
+records(
+month: String
+type: Operation
+accountsIds: [ID!]
+categoriesIds: [ID!]
+): [Record!]!
+
+type Record {
+id: ID!
+user: User!
+account: Account!
+category: Category
+amount: Float!
+type: Operation!
+date: Date!
+description: String!
+tags: String
+note: String
+}
+
+month: String
+type: Operation
+accountsIds: [ID!]
+categoriesIds: [ID]
