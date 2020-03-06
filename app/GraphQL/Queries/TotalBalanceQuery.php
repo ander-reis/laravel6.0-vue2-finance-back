@@ -36,7 +36,6 @@ class TotalBalanceQuery extends Query
     {
         return [
             'date' => [
-//                'type' => Type::string(),
                 'type' => GraphQL::type('date'),
                 'description' => 'date amount record'
             ]
@@ -52,9 +51,7 @@ class TotalBalanceQuery extends Query
 
 
         $date = Carbon::parse($args['date'])->format('Y-m-d');
-
         $totalBalance = JWTAuth::user()->records->where('date', '<=', $date)->sum('amount');
-
         return $totalBalance;
     }
 }

@@ -3,3 +3,11 @@ https://github.com/rebing/graphql-laravel
 https://medium.com/skyshidigital/easy-build-api-using-laravel-and-graphql-jwt-authentication-part-3-ea15c2421408
 
 https://github.com/mll-lab/laravel-graphql-playground
+
+
+SELECT * FROM record WHERE date BETWEEN '2020-03-01' and '2020-03-31';
+
+select SUM('amount') as totalBalance
+from record
+where user_id = 1
+and date <= '2020-03-05'

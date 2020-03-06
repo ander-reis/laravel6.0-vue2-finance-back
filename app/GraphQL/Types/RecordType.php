@@ -33,7 +33,6 @@ class RecordType extends GraphQLType
             ],
             'date' => [
                 'type' => Type::nonNull(GraphQL::type('date')),
-//                'type' => Type::string(),
                 'description' => 'Date record',
             ],
             'description' => [

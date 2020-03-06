@@ -43,14 +43,14 @@ class RecordQuery extends Query
                 'type' => GraphQL::type('operation'),
                 'description' => 'operation record'
             ],
-            'accountsIds' => [
-                'type' => Type::listOf(GraphQL::type('accounts')),
-                'description' => 'account record id'
-            ],
-            'categoriesIds' => [
-                'type' => Type::listOf(GraphQL::type('categories')),
-                'description' => 'categories record id'
-            ]
+//            'accountsIds' => [
+//                'type' => Type::listOf(GraphQL::type('accounts')),
+//                'description' => 'account record id'
+//            ],
+//            'categoriesIds' => [
+//                'type' => Type::listOf(GraphQL::type('categories')),
+//                'description' => 'categories record id'
+//            ]
         ];
     }
 
@@ -61,12 +61,12 @@ class RecordQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $userId = auth()->user()->id;
+//        $userId = auth()->user()->id;
 //        $record = Record::where('user_id', $userId)->get();
 
-        $date = Carbon::now();
-        $date_start = $date->parse('01-' . $args['month'])->format('Y-m-d');
-        $date_end = $date->format('Y-m-d');
+//        $date = Carbon::now();
+//        $date_start = $date->parse('01-' . $args['month'])->format('Y-m-d');
+//        $date_end = $date->format('Y-m-d');
 
 //        $record = Record::where('user_id', $userId)
 //            ->where('type', '=', $args['type'] ?? null)
@@ -76,7 +76,6 @@ class RecordQuery extends Query
 //            ->get();
 
 //        dd($record);
-
 
         $record = JWTAuth::user()->records;
         return $record;
