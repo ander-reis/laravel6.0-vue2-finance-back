@@ -43,14 +43,14 @@ class RecordQuery extends Query
                 'type' => GraphQL::type('operation'),
                 'description' => 'operation record'
             ],
-//            'accountsIds' => [
-//                'type' => Type::listOf(GraphQL::type('accounts')),
-//                'description' => 'account record id'
-//            ],
-//            'categoriesIds' => [
-//                'type' => Type::listOf(GraphQL::type('categories')),
-//                'description' => 'categories record id'
-//            ]
+            'accountsIds' => [
+                'type' => Type::listOf(Type::id()),
+                'description' => 'account record id'
+            ],
+            'categoriesIds' => [
+                'type' => Type::listOf(Type::id()),
+                'description' => 'categories record id'
+            ]
         ];
     }
 
@@ -61,23 +61,44 @@ class RecordQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-//        $userId = auth()->user()->id;
-//        $record = Record::where('user_id', $userId)->get();
+        $userId = auth()->user()->id;
+        $month = isset($args['month']) ? $args['month'] : null;
+        $date_start = null;
+        $date_end = null;
+        $type = isset($args['type']) ? $args['type'] : null;
+        $accountId = isset($args['accountsIds']) ? $args['accountsIds'] : null;
+        $categoryId = isset($args['categoriesIds']) ? $args['categoriesIds'] : null;
 
-//        $date = Carbon::now();
-//        $date_start = $date->parse('01-' . $args['month'])->format('Y-m-d');
-//        $date_end = $date->format('Y-m-d');
+        if (isset($month)) {
+            $data = $month ? explode('-', $month) : null;
+            $mes = $data[0];
+            $ano = $data[1];
 
-//        $record = Record::where('user_id', $userId)
-//            ->where('type', '=', $args['type'] ?? null)
-//            ->where('account_id', $args['accountsIds'] ?? null)
-//            ->whereBetween('date' , [$date_start, $date_end])
-//            ->orderBy('date')
-//            ->get();
+            $date = Carbon::parse("{$ano}-{$mes}");
+            $date_start = $date->parse('01-' . $args['month'])->format('Y-m-d');
+            $date_end = $date->parse('30-' . $args['month'])->format('Y-m-d');
 
-//        dd($record);
+            //dd($date, $date->copy()->startOfMonth(), $date->endOfMonth()->copy());
+        }
 
-        $record = JWTAuth::user()->records;
+        $record = Record::when($userId, function ($query, $userId) {
+            return $query->where('user_id', $userId);
+        })
+            ->when($type, function ($query, $type) {
+                return $query->where('type', $type);
+            })
+            ->when($accountId, function ($query, $accountId) {
+                return $query->where('account_id', $accountId);
+            })
+            ->when($categoryId, function ($query, $categoryId) {
+                return $query->where('category_id', $categoryId);
+            })
+            ->when($month, function ($query) use ($date_start, $date_end) {
+                return $query->whereBetween('date', [$date_start, $date_end]);
+            })
+            ->orderBy('date', 'asc')
+            ->get();
+
         return $record;
     }
 }

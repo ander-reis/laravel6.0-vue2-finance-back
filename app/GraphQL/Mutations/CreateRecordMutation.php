@@ -36,11 +36,11 @@ class CreateRecordMutation extends Mutation
     {
         return [
             'accountId' => [
-                'type' => Type::nonNull(Type::int()),
+                'type' => Type::nonNull(Type::id()),
                 'description' => 'account_id'
             ],
             'categoryId' => [
-                'type' => Type::nonNull(Type::int()),
+                'type' => Type::nonNull(Type::id()),
                 'description' => 'category_id'
             ],
             'amount' => [
