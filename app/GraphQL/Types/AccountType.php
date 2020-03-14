@@ -22,11 +22,11 @@ class AccountType extends GraphQLType
     {
         return [
             'id' => [
-                'type' => Type::id(),
+                'type' => Type::nonNull(Type::id()),
                 'description' => 'O id do usuário no banco'
             ],
             'description' => [
-                'type' => Type::string(),
+                'type' => Type::nonNull(Type::string()),
                 'description' => 'A descrição de account'
             ],
             'user' => [

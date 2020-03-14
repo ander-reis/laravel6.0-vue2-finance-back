@@ -29,7 +29,7 @@ class AccountQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('accounts'));
+        return Type::nonNull(Type::listOf(Type::nonNull(GraphQL::type('accounts'))));
     }
 
     public function args(): array

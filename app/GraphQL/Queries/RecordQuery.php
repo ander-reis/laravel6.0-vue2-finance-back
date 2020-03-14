@@ -29,7 +29,7 @@ class RecordQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('records'));
+        return Type::nonNull(Type::listOf(Type::nonNull(GraphQL::type('records'))));
     }
 
     public function args(): array

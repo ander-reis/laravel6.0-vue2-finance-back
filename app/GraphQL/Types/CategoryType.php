@@ -11,7 +11,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class CategoryType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'Cotegory',
+        'name' => 'Category',
         'description' => 'A type'
     ];
 
@@ -19,15 +19,15 @@ class CategoryType extends GraphQLType
     {
         return [
             'id' => [
-                'type' => Type::id(),
+                'type' => Type::nonNull(Type::id()),
                 'description' => 'Id da categoria'
             ],
             'description' => [
-                'type' => Type::string(),
+                'type' => Type::nonNull(Type::string()),
                 'description' => 'Descrição da categoria'
             ],
             'operation' => [
-                'type' => GraphQL::type('operation'),
+                'type' => Type::nonNull(GraphQL::type('operation')),
                 'description' => 'Operação da categoria'
             ],
             'user' => [

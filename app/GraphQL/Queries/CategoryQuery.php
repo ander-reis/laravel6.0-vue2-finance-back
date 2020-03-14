@@ -28,7 +28,7 @@ class CategoryQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('categories'));
+        return Type::nonNull(Type::listOf(Type::nonNull(GraphQL::type('categories'))));
     }
 
     public function args(): array
